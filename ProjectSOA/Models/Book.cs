@@ -13,6 +13,5 @@
 
         public int Written { get; set; }
 
-        public ICollection<Student> Students { get; set; }
     }
 }

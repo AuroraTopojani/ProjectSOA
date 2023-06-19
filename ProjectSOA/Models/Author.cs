@@ -6,6 +6,6 @@
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Born { get; set; }
-        public ICollection<Book> Books { get; set; }
+       
     }
 }

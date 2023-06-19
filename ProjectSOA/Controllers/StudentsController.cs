@@ -51,7 +51,16 @@ namespace ProjectSOA.Controllers
                             },
                             Written=1990
                         }
+                    },
+                Tables = new List<Table>()
+                {
+                    new Table
+                    {
+                        tId=1,
+                        tAvailability=true
                     }
+                }
+                     
 
 
     },
@@ -93,7 +102,15 @@ namespace ProjectSOA.Controllers
                             },
                             Written=1935
                         }
+                    },
+                        Tables = new List<Table>()
+                         {
+                    new Table
+                    {
+                        tId=1,
+                        tAvailability=true
                     }
+                }
                 }
 
             };
@@ -102,7 +119,7 @@ namespace ProjectSOA.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<string> GetStudentById(int Id)
+        public ActionResult<string> GetStudentById(int id)
         {
             var student = "Some student";
             return Ok(student);
@@ -116,15 +133,15 @@ namespace ProjectSOA.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateStudent(int Id, [FromBody] string student)
+        public ActionResult UpdateStudent(int id, [FromBody] string student)
         {
             return Ok($"The student {student} is updated");
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteStudent(int Id)
+        public ActionResult DeleteStudent(int id)
         {
-            return Ok($"The student with id {Id} is deleted");
+            return Ok($"The student with id {id} is deleted");
         }
     }
 }
