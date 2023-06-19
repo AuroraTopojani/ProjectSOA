@@ -1,10 +1,8 @@
 
 using ProjectSOA.Interfaces;
 using ProjectSOA.Repository;
-
-using Microsoft.EntityFrameworkCore;
 using ProjectSOA.Data;
-
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +13,6 @@ builder.Services.AddTransient<IStudentRepository, MockStudentRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
-
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));

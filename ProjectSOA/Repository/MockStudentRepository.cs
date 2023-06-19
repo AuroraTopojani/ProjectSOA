@@ -16,7 +16,7 @@ namespace ProjectSOA.Repository
                   {
                      Id=1,
                      Name= "Sulejma",
-                     Surame="Kurtishi",
+                     Surname="Kurtishi",
                      Faculty=" CST",
                      Books = new List<Book>
                     {
@@ -64,7 +64,7 @@ namespace ProjectSOA.Repository
                         {
                      Id=2,
                      Name= "Aurora",
-                     Surame="Topojani",
+                     Surname="Topojani",
                      Faculty=" CST",
                      Books = new List<Book>
                     {
