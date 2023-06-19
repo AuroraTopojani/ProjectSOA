@@ -64,5 +64,7 @@ namespace ProjectSOA.Controllers
             _bookRepository.DeleteBook(id);
             return NoContent();
         }
+      
+       
     }
 }

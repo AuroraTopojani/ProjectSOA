@@ -64,5 +64,7 @@ namespace ProjectSOA.Controllers
             _studentRepository.DeleteStudent(id);
             return NoContent();
         }
+
+       
     }
 }
