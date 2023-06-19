@@ -1,5 +1,10 @@
+
 using ProjectSOA.Interfaces;
 using ProjectSOA.Repository;
+
+using Microsoft.EntityFrameworkCore;
+using ProjectSOA.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +16,11 @@ builder.Services.AddTransient<IStudentRepository, MockStudentRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
