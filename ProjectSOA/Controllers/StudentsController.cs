@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProjectSOA.Dtos;
 using ProjectSOA.Interfaces;
 using ProjectSOA.Models;
 
@@ -10,46 +12,53 @@ namespace ProjectSOA.Controllers
     public class StudentsController : ControllerBase
     {
         private readonly IStudentRepository _studentRepository;
-        public StudentsController(IStudentRepository studentRepository)
+        private readonly IMapper _mapper;
+        public StudentsController(IStudentRepository studentRepository, IMapper mapper )
         {
             _studentRepository = studentRepository;
+            _mapper = mapper;
         }
         [HttpGet]
-        public ActionResult<IEnumerable<Student>> GetAllStudents()
+        public ActionResult<IEnumerable<StudentDto>> GetAllStudents()
         {
 
             var students = _studentRepository.GetStudents();
             if (!students.Any())
                 return NotFound();
+            var studentDtos = _mapper.Map<IEnumerable<StudentDto>>(students);
 
-            return Ok(students);
+            return Ok(studentDtos);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<string> GetStudentById(int id)
+        public ActionResult<StudentDto> GetStudentById(int id)
         {
             var student = _studentRepository.GetStudentById(id);
             if(student == null)
                 return NotFound();
-            return Ok(student);
+
+            var studentDto = _mapper.Map<StudentDto>(student);
+            return Ok(studentDto);
         }
 
         [HttpPost]
-        public ActionResult CreateStudent([FromBody]Student student)
+        public ActionResult CreateStudent([FromBody]CreateStudentDto createStudentDto)
         {
+            var student = _mapper.Map<Student>(createStudentDto);
             if (student == null)
                 return BadRequest();
             _studentRepository.CreateStudent(student);
+            _studentRepository.SaveChanges();
             return Created("MovieUri", new { student.Name });
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateStudent(int id, [FromBody] Student student)
+        public ActionResult UpdateStudent(int id, [FromBody] UpdateStudentDto updateStudentDto)
         {
-            var oldStudent=_studentRepository.GetStudentById(id);
-            if (oldStudent == null)
-                return NotFound();
-            _studentRepository.UpdateStudent(student);  
+
+            var student = _mapper.Map<Student>(updateStudentDto);
+            _studentRepository.UpdateStudent(student);
+            _studentRepository.SaveChanges();
 
             return NoContent();
 

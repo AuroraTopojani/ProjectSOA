@@ -101,3 +101,5 @@ C:\Users\Administrator\Desktop\ProjectSOA\ProjectSOA\obj\Debug\net6.0\refint\Pro
 C:\Users\Administrator\Desktop\ProjectSOA\ProjectSOA\obj\Debug\net6.0\ProjectSOA.pdb
 C:\Users\Administrator\Desktop\ProjectSOA\ProjectSOA\obj\Debug\net6.0\ProjectSOA.genruntimeconfig.cache
 C:\Users\Administrator\Desktop\ProjectSOA\ProjectSOA\obj\Debug\net6.0\ref\ProjectSOA.dll
+C:\Users\Client\Desktop\ProjectSOA\ProjectSOA\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\Client\Desktop\ProjectSOA\ProjectSOA\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
