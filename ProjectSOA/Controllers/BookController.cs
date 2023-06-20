@@ -72,7 +72,7 @@ namespace ProjectSOA.Controllers
                 return BadRequest();
 
             _bookRepository.DeleteBook(id);
-            return NoContent();
+            return Ok($"The movie with id {id} is deleted");
         }
       
        

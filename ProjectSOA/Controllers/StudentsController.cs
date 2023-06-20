@@ -71,7 +71,7 @@ namespace ProjectSOA.Controllers
             if (student == null)
                 return BadRequest();
             _studentRepository.DeleteStudent(id);
-            return NoContent();
+            return Ok($"The student with id {id} is deleted");
         }
 
        
