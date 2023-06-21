@@ -2,6 +2,7 @@
 using ProjectSOA.Data;
 using ProjectSOA.Interfaces;
 using ProjectSOA.Models;
+using ProjectSOA.Services;
 
 namespace ProjectSOA.Repository
 {
@@ -16,11 +17,48 @@ namespace ProjectSOA.Repository
             }
             public IEnumerable<Book> GetBooks()
             {
-                var book = _context.Books.Include(x => x.Title).Include(x => x.Genre).ToList();
-                return book;
+                var books = _context.Books
+                    .Include(b => b.Author)
+                    .ToList();
+
+                return books;
+            }
+        public (IEnumerable<Book>, PaginationMetadata) SearchBooks(int? minYear, int? maxYear, string? searchTerm, int pageNumber, int pageSize)
+        {
+            var books = _context.Books as IQueryable<Book>;
+
+            if (minYear != null)
+            {
+                books = books.Where(b => b.Written > minYear);
             }
 
-            public Book GetBookById(int id)
+            if (maxYear != null)
+            {
+                books = books.Where(b=> b.Written < maxYear);
+            }
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                books = books.Where(b => b.Title.Contains(searchTerm) || b.Genre.Contains(searchTerm));
+            }
+
+       
+
+            var totalItemCount = books.Count();
+
+            var paginationMetadata = new PaginationMetadata(
+                totalItemCount, pageSize, pageNumber);
+
+            books = books
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize);
+
+            return (books.ToList(), paginationMetadata);
+        }
+
+   
+
+        public Book GetBookById(int id)
             {
                 var book = _context.Books.FirstOrDefault(x => x.bId == id);
                 return book;

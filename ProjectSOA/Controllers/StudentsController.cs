@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProjectSOA.Dtos;
 using ProjectSOA.Interfaces;
 using ProjectSOA.Models;
+using ProjectSOA.Repository;
 
 namespace ProjectSOA.Controllers
 {
@@ -23,8 +24,8 @@ namespace ProjectSOA.Controllers
         {
 
             var students = _studentRepository.GetStudents();
-            if (!students.Any())
-                return NotFound();
+            //if (!students.Any())
+                //return NotFound();
             var studentDtos = _mapper.Map<IEnumerable<StudentDto>>(students);
 
             return Ok(studentDtos);
@@ -49,7 +50,7 @@ namespace ProjectSOA.Controllers
                 return BadRequest();
             _studentRepository.CreateStudent(student);
             _studentRepository.SaveChanges();
-            return Created("MovieUri", new { student.Name });
+            return Created("BookUri", new { student.Name });
         }
 
         [HttpPut("{id}")]
@@ -74,6 +75,5 @@ namespace ProjectSOA.Controllers
             return Ok($"The student with id {id} is deleted");
         }
 
-       
     }
 }

@@ -16,15 +16,19 @@ namespace ProjectSOA.Repository
             }
             public IEnumerable<Student> GetStudents()
             {
-                var student = _context.Students.Include(x => x.Name).Include(x => x.Surname).ToList();
-                return student;
+                var students = _context.Students
+                    .Include(s => s.Books)
+                    .Include(s => s.BookTables)
+                    .ToList();
+
+                return students;
             }
 
             public Student GetStudentById(int id)
-            {
-                var student = _context.Students.FirstOrDefault(x => x.Id == id);
-                return student;
-            }
+                {
+                    var student = _context.Students.FirstOrDefault(x => x.Id == id);
+                    return student;
+                }
 
             public void CreateStudent(Student student)
             {
@@ -37,14 +41,21 @@ namespace ProjectSOA.Repository
                 SaveChanges();
             }
 
-            public void DeleteStudent(int id)
-            {
-                var student = _context.Students.FirstOrDefault(x => x.Id == id);
-                _context.Remove(student);
-                SaveChanges();
-            }
+        public void DeleteStudent(int id)
+        {
+            var student = _context.Students.Include(s => s.Books).FirstOrDefault(x => x.Id == id);
 
-            public bool SaveChanges()
+            // Delete associated books
+            _context.RemoveRange(student.Books);
+
+            // Delete the student
+            _context.Remove(student);
+
+          
+        }
+
+
+        public bool SaveChanges()
             {
                 _context.SaveChanges();
                 return true;

@@ -2,8 +2,8 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProjectSOA.Data;
 
 #nullable disable
@@ -18,28 +18,28 @@ namespace ProjectSOA.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.7")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("ProjectSOA.Models.Author", b =>
                 {
                     b.Property<int>("AId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AId"));
 
                     b.Property<int>("Born")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AId");
 
@@ -50,29 +50,29 @@ namespace ProjectSOA.Migrations
                 {
                     b.Property<int>("bId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("bId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("bId"));
 
                     b.Property<int>("AuthorAId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("Genre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StudentId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Written")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<bool>("availability")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.HasKey("bId");
 
@@ -83,50 +83,50 @@ namespace ProjectSOA.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("ProjectSOA.Models.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Faculty")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Surame")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("ProjectSOA.Models.Table", b =>
+            modelBuilder.Entity("ProjectSOA.Models.BookTable", b =>
                 {
                     b.Property<int>("tId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("tId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("tId"));
 
                     b.Property<int?>("StudentId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<bool>("tAvailability")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.HasKey("tId");
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Table");
+                    b.ToTable("BookTables");
+                });
+
+            modelBuilder.Entity("ProjectSOA.Models.Student", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Faculty")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("ProjectSOA.Models.Book", b =>
@@ -144,18 +144,18 @@ namespace ProjectSOA.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("ProjectSOA.Models.Table", b =>
+            modelBuilder.Entity("ProjectSOA.Models.BookTable", b =>
                 {
                     b.HasOne("ProjectSOA.Models.Student", null)
-                        .WithMany("Tables")
+                        .WithMany("BookTables")
                         .HasForeignKey("StudentId");
                 });
 
             modelBuilder.Entity("ProjectSOA.Models.Student", b =>
                 {
-                    b.Navigation("Books");
+                    b.Navigation("BookTables");
 
-                    b.Navigation("Tables");
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

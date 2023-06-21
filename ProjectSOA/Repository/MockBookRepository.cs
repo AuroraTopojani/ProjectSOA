@@ -1,5 +1,6 @@
 ﻿using ProjectSOA.Interfaces;
 using ProjectSOA.Models;
+using ProjectSOA.Services;
 
 namespace ProjectSOA.Repository
 {
@@ -110,9 +111,11 @@ namespace ProjectSOA.Repository
             //Do nothing
             return true;
         }
-        
 
-
+        public (IEnumerable<Book> Books, PaginationMetadata PaginationMetadata) SearchBooks(int? minYear, int? maxYear, string? searchTerm, int pageNumber, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

@@ -10,6 +10,6 @@ namespace ProjectSOA.Dtos
         public string Faculty { get; set; }
         public ICollection<Book> Books { get; set; }
 
-        public ICollection<Table> Tables { get; set; }
+        public ICollection<BookTable> BookTables { get; set; }
     }
 }

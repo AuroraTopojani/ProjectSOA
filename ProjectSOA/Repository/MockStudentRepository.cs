@@ -51,9 +51,9 @@ namespace ProjectSOA.Repository
                             Written=1990
                         }
                     },
-                Tables = new List<Table>()
+                BookTables = new List<BookTable>()
                 {
-                    new Table
+                    new BookTable
                     {
                         tId=1,
                         tAvailability=true
@@ -99,9 +99,9 @@ namespace ProjectSOA.Repository
                             Written=1935
                         }
                     },
-                        Tables = new List<Table>()
+                        BookTables = new List<BookTable>()
                          {
-                    new Table
+                    new BookTable
                     {
                         tId=1,
                         tAvailability=true
